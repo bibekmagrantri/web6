@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My E-commerce Website</title>
+   <!-- Start of Async Drift Code -->
+<script>
+"use strict";
+
+!function() {
+  var t = window.driftt = window.drift = window.driftt || [];
+  if (!t.init) {
+    if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+    t.invoked = !0, t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ], 
+    t.factory = function(e) {
+      return function() {
+        var n = Array.prototype.slice.call(arguments);
+        return n.unshift(e), t.push(n), t;
+      };
+    }, t.methods.forEach(function(e) {
+      t[e] = t.factory(e);
+    }), t.load = function(t) {
+      var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+      o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+      var i = document.getElementsByTagName("script")[0];
+      i.parentNode.insertBefore(o, i);
+    };
+  }
+}();
+drift.SNIPPET_VERSION = '0.3.1';
+drift.load('bg8btpw645xc');
+</script>
+<!-- End of Async Drift Code -->
+
+
+
+
+
+
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            width: 300px;
+            margin: auto;
+        }
+
+        .close {
+            float: right;
+            cursor: pointer;
+            color: red;
+        }
+
+        .subscribe {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .subscribe a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .buy-button,
+        .details-button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .details-button {
+            margin-right: 10px;
+        }
+
+        .admin {
+            margin-top: 20px;
+            display: none; /* Hide by default */
+        }
+
+        .admin-item-controls {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        .admin-item-controls button {
+            margin-left: 5px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .chat-box {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        .chat-box-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .chat-box-header .close-chat {
+            cursor: pointer;
+            color: red;
+        }
+
+        .chat-box-content {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .chat-input {
+            width: calc(100% - 20px);
+            margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .send-button {
+            margin-top: 5px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a class="nav-link" data-section="home">Home</a></li>
+                <li><a class="nav-link" data-section="contact">Contact Us</a></li>
+                <li><a class="nav-link" data-section="help">Help</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h1>Welcome to My Store</h1>
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <span class="close">&times;</span>
+                <p>Subscribe to our newsletter!</p>
+                <input type="email" placeholder="Enter your email">
+                <button>Subscribe</button>
+            </div>
+        </div>
+        <button id="popupBtn">Click for Pop-up</button>
+    </section>
+
+    <section id="video">
+        <h2>Featured Video</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/Pf5oQ3VGC1k?si=wMVTW0x4qlSRp77A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <button class="subscribe"><a href="https://www.youtube.com/channel/UC6uT2qwWXAMSC-J594HUYHg" target="_blank">Subscribe</a></button>
+    </section>
+
+    <section id="items">
+        <h2>Items for Sale</h2>
+        <div id="itemList">
+            <!-- Items will be added here -->
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Email: contact@example.com</p>
+        <p>Phone: +1234567890</p>
+    </section>
+
+    <section id="help">
+        <h2>Help</h2>
+        <p>For any inquiries, please visit our FAQ page or contact our support team.</p>
+    </section>
+
+    <section class="admin" id="adminSection">
+        <h2>Admin Seller Section</h2>
+        <input type="text" id="itemName" placeholder="Item Name">
+        <input type="text" id="itemPrice" placeholder="Item Price">
+        <textarea id="itemDetails" placeholder="Item Details"></textarea>
+        <input type="file" id="itemImage" accept="image/*">
+        <button id="addItemBtn">Add Item</button>
+        <div id="adminItemList">
+            <!-- Admin items will be added here -->
+        </div>
+    </section>
+
+    <div class="popup" id="navPopup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <div id="popupContent"></div>
+        </div>
+    </div>
+
+    <div class="chat-box" id="chatBox">
+        <div class="chat-box-header">
+            <h3>Live Chat with Seller</h3>
+            <span class="close-chat">&times;</span>
+        </div>
+        <div class="chat-box-content" id="chatBoxContent">
+            <!-- Chat messages will be added here -->
+        </div>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
+        <button class="send-button" id="sendBtn">Send</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var popup = document.getElementById('popup');
+            var navPopup = document.getElementById('navPopup');
+            var popupBtn = document.getElementById('popupBtn');
+            var closeBtns = document.querySelectorAll('.close');
+            var navLinks = document.querySelectorAll('.nav-link');
+            var popupContent = document.getElementById('popupContent');
+            var addItemBtn = document.getElementById('addItemBtn');
+            var itemList = document.getElementById('itemList');
+            var adminItemList = document.getElementById('adminItemList');
+            var chatBox = document.getElementById('chatBox');
+            var chatBoxContent = document.getElementById('chatBoxContent');
+            var chatInput = document.getElementById('chatInput');
+            var sendBtn = document.getElementById('sendBtn');
+            var closeChatBtn = document.querySelector('.close-chat');
+            var isAdmin = false;
+
+            // Prompt for admin password on page load
+            function authenticateAdmin() {
+                var password = prompt("Enter admin password:");
+                if (password === "admin123") {
+                    isAdmin = true;
+                    document.getElementById('adminSection').style.display = 'block';
+                } else {
+                    alert("Incorrect password. You are not authorized.");
+                }
+            }
+
+            authenticateAdmin();
+
+            // Show popup
+            function showPopup(message) {
+                var popupDiv = document.createElement('div');
+                popupDiv.className = 'popup';
+                popupDiv.style.display = 'flex';
+                popupDiv.innerHTML = `
+                    <div class="popup-content">
+                        <span class="close">&times;</span>
+                        <p>${message}</p>
+                    </div>
+                `;
+                document.body.appendChild(popupDiv);
+                popupDiv.style.display = 'flex';
+
+                var closeBtn = popupDiv.querySelector('.close');
+                closeBtn.onclick = function() {
+                    popupDiv.remove();
+                };
+
+                setTimeout(function() {
+                    popupDiv.remove();
+                }, 3000);
+            }
+
+            // Save items to local storage
+            function saveItemsToLocalStorage(items) {
+                localStorage.setItem('items', JSON.stringify(items));
+            }
+
+            // Load items from local storage
+            function loadItemsFromLocalStorage() {
+                var items = localStorage.getItem('items');
+                if (items) {
+                    items = JSON.parse(items);
+                    items.forEach(function(item) {
+                        addItem(item.name, item.price, item.details, item.imageSrc, false);
+                    });
+                }
+            }
+
+            // Add item
+            function addItem(name, price, details, imageSrc, save = true) {
+                var itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.innerHTML = `
+                    <div class="admin-item-controls">
+                        <button class="delete-item">Delete</button>
+                    </div>
+                    <p><strong>${name}</strong></p>
+                    <p>Price: $${price}</p>
+                    <p>Details: ${details}</p>
+                    <img src="${imageSrc}" alt="${name}">
+                    <button class="details-button">Product Details</button>
+                    <button class="buy-button">Buy</button>
+                `;
+                itemList.appendChild(itemDiv);
+
+                var adminItemDiv = itemDiv.cloneNode(true);
+                adminItemList.appendChild(adminItemDiv);
+
+                var deleteBtn = adminItemDiv.querySelector('.delete-item');
+                deleteBtn.onclick = function() {
+                    adminItemDiv.remove();
+                    itemDiv.remove();
+                    updateLocalStorage();
+                };
+
+                var buyBtn = itemDiv.querySelector('.buy-button');
+                buyBtn.onclick = function() {
+                    chatBox.style.display = 'block';
+                };
+
+                if (save) {
+                    showPopup(`Item "${name}" added successfully!`);
+                    updateLocalStorage();
+                }
+            }
+
+            // Update local storage with current items
+            function updateLocalStorage() {
+                var items = [];
+                var itemElements = itemList.querySelectorAll('.item');
+                itemElements.forEach(function(itemElement) {
+                    var name = itemElement.querySelector('p strong').textContent;
+                    var price = itemElement.querySelector('p:nth-of-type(2)').textContent.split('$')[1];
+                    var details = itemElement.querySelector('p:nth-of-type(3)').textContent.split(': ')[1];
+                    var imageSrc = itemElement.querySelector('img').src;
+                    items.push({ name: name, price: price, details: details, imageSrc: imageSrc });
+                });
+                saveItemsToLocalStorage(items);
+            }
+
+            loadItemsFromLocalStorage();
+
+            // Event listener for Add Item button
+            addItemBtn.addEventListener('click', function() {
+                var itemName = document.getElementById('itemName').value;
+                var itemPrice = document.getElementById('itemPrice').value;
+                var itemDetails = document.getElementById('itemDetails').value;
+                var itemImage = document.getElementById('itemImage').files[0];
+
+                if (itemName && itemPrice && itemDetails && itemImage) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        addItem(itemName, itemPrice, itemDetails, event.target.result);
+                    };
+                    reader.readAsDataURL(itemImage);
+
+                    document.getElementById('itemName').value = '';
+                    document.getElementById('itemPrice').value = '';
+                    document.getElementById('itemDetails').value = '';
+                    document.getElementById('itemImage').value = '';
+                } else {
+                    alert('Please fill all fields');
+                }
+            });
+
+            // Event listener for popup button
+            popupBtn.addEventListener('click', function() {
+                popup.style.display = 'block';
+            });
+
+            // Event listeners for closing popups
+            closeBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    this.parentElement.parentElement.style.display = 'none';
+                });
+            });
+
+            // Event listeners for navigation links
+            navLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    var sectionId = this.getAttribute('data-section');
+                    var section = document.getElementById(sectionId);
+                    navPopup.style.display = 'block';
+                    popupContent.innerHTML = section.innerHTML;
+                });
+            });
+
+            // Event listener for chat box toggle
+            closeChatBtn.addEventListener('click', function() {
+                chatBox.style.display = 'none';
+            });
+
+            // Event listener for send button in chat box
+            sendBtn.addEventListener('click', function() {
+                var message = chatInput.value.trim();
+                if (message !== '') {
+                    var messageDiv = document.createElement('div');
+                    messageDiv.className = 'message';
+                    messageDiv.textContent = "Visitor: " + message;
+                    chatBoxContent.appendChild(messageDiv);
+                    chatInput.value = '';
+                    // Save the message to local storage
+                    saveMessageToLocalStorage("Visitor: " + message);
+                }
+            });
+
+            // Save chat messages to local storage
+            function saveMessageToLocalStorage(message) {
+                var messages = localStorage.getItem('chatMessages');
+                messages = messages ? JSON.parse(messages) : [];
+                messages.push(message);
+                localStorage.setItem('chatMessages', JSON.stringify(messages));
+            }
+
+            // Load chat messages from local storage
+            function loadMessagesFromLocalStorage() {
+                var messages = localStorage.getItem('chatMessages');
+                if (messages) {
+                    messages = JSON.parse(messages);
+                    messages.forEach(function(message) {
+                        var messageDiv = document.createElement('div');
+                        messageDiv.className = 'message';
+                        messageDiv.textContent = message;
+                        chatBoxContent.appendChild(messageDiv);
+                    });
+                }
+            }
+
+            loadMessagesFromLocalStorage();
+        });
+    </script>
+</body>
+</html>
