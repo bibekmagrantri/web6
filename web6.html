@@ -17,7 +17,6 @@
   
 
   <style>
-
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -275,222 +274,171 @@
             <!-- Chat messages will be added here -->
         </div>
         <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
-        <button class="send-button" id="sendBtn">Send</button>
+        <button class="send-button" id="sendButton">Send</button>
     </div>
+    <button id="chatBtn">Chat with Seller</button>
+
+    <!-- Password Section -->
+    <section id="passwordSection">
+        <h2>Admin Login</h2>
+        <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+        <button id="loginBtn">Login</button>
+    </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var popup = document.getElementById('popup');
-            var navPopup = document.getElementById('navPopup');
-            var popupBtn = document.getElementById('popupBtn');
-            var closeBtns = document.querySelectorAll('.close');
-            var navLinks = document.querySelectorAll('.nav-link');
-            var popupContent = document.getElementById('popupContent');
-            var addItemBtn = document.getElementById('addItemBtn');
-            var itemList = document.getElementById('itemList');
-            var adminItemList = document.getElementById('adminItemList');
-            var chatBox = document.getElementById('chatBox');
-            var chatBoxContent = document.getElementById('chatBoxContent');
-            var chatInput = document.getElementById('chatInput');
-            var sendBtn = document.getElementById('sendBtn');
-            var closeChatBtn = document.querySelector('.close-chat');
-            var isAdmin = false;
+        // JavaScript for pop-up
+        var popup = document.getElementById("popup");
+        var popupBtn = document.getElementById("popupBtn");
+        var closePopup = document.getElementsByClassName("close")[0];
 
-            // Prompt for admin password on page load
-            function authenticateAdmin() {
-                var password = prompt("Enter admin password:");
-                if (password === "admin123") {
-                    isAdmin = true;
-                    document.getElementById('adminSection').style.display = 'block';
-                } else {
-                    alert("Incorrect password. You are not authorized.");
-                }
+        popupBtn.onclick = function() {
+            popup.style.display = "flex";
+        }
+
+        closePopup.onclick = function() {
+            popup.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == popup) {
+                popup.style.display = "none";
+            }
+        }
+
+        // JavaScript for navigation
+        var navLinks = document.querySelectorAll('.nav-link');
+        var sections = document.querySelectorAll('section');
+
+        navLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                var section = document.getElementById(link.getAttribute('data-section'));
+                sections.forEach(function(sec) {
+                    sec.style.display = 'none';
+                });
+                section.style.display = 'block';
+            });
+        });
+
+        // JavaScript for item list
+        var itemList = document.getElementById("itemList");
+        var adminItemList = document.getElementById("adminItemList");
+        var addItemBtn = document.getElementById("addItemBtn");
+        var items = [];
+        
+        // JavaScript for live chat
+        var chatBtn = document.getElementById("chatBtn");
+        var chatBox = document.getElementById("chatBox");
+        var closeChat = document.getElementsByClassName("close-chat")[0];
+        var chatBoxContent = document.getElementById("chatBoxContent");
+        var chatInput = document.getElementById("chatInput");
+        var sendButton = document.getElementById("sendButton");
+        
+        chatBtn.onclick = function() {
+            chatBox.style.display = "block";
+        }
+
+        closeChat.onclick = function() {
+            chatBox.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == chatBox) {
+                chatBox.style.display = "none";
+            }
+        }
+
+        sendButton.onclick = function() {
+            var message = chatInput.value;
+            var messageElement = document.createElement("p");
+            messageElement.textContent = message;
+            chatBoxContent.appendChild(messageElement);
+            chatInput.value = "";
+        }
+
+        // JavaScript for admin section
+        var adminSection = document.getElementById("adminSection");
+        var adminPassword = document.getElementById("adminPassword");
+        var loginBtn = document.getElementById("loginBtn");
+        var passwordSection = document.getElementById("passwordSection");
+
+        const correctPassword = "admin123"; // Replace with your desired password
+
+        loginBtn.onclick = function() {
+            if (adminPassword.value === correctPassword) {
+                adminSection.style.display = "block";
+                passwordSection.style.display = "none";
+            } else {
+                alert("Incorrect password. Please try again.");
+            }
+        }
+
+        addItemBtn.onclick = function() {
+            var itemName = document.getElementById("itemName").value;
+            var itemPrice = document.getElementById("itemPrice").value;
+            var itemDetails = document.getElementById("itemDetails").value;
+            var itemImage = document.getElementById("itemImage").files[0];
+
+            if (!itemName || !itemPrice || !itemDetails || !itemImage) {
+                alert("Please fill in all fields and select an image.");
+                return;
             }
 
-            authenticateAdmin();
-
-            // Show popup
-            function showPopup(message) {
-                var popupDiv = document.createElement('div');
-                popupDiv.className = 'popup';
-                popupDiv.style.display = 'flex';
-                popupDiv.innerHTML = `
-                    <div class="popup-content">
-                        <span class="close">&times;</span>
-                        <p>${message}</p>
-                    </div>
-                `;
-                document.body.appendChild(popupDiv);
-                popupDiv.style.display = 'flex';
-
-                var closeBtn = popupDiv.querySelector('.close');
-                closeBtn.onclick = function() {
-                    popupDiv.remove();
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var item = {
+                    name: itemName,
+                    price: itemPrice,
+                    details: itemDetails,
+                    image: event.target.result
                 };
+                items.push(item);
+                displayItems();
+                displayAdminItems();
+            };
+            reader.readAsDataURL(itemImage);
+        };
 
-                setTimeout(function() {
-                    popupDiv.remove();
-                }, 3000);
-            }
-
-            // Save items to local storage
-            function saveItemsToLocalStorage(items) {
-                localStorage.setItem('items', JSON.stringify(items));
-            }
-
-            // Load items from local storage
-            function loadItemsFromLocalStorage() {
-                var items = localStorage.getItem('items');
-                if (items) {
-                    items = JSON.parse(items);
-                    items.forEach(function(item) {
-                        addItem(item.name, item.price, item.details, item.imageSrc, false);
-                    });
-                }
-            }
-
-            // Add item
-            function addItem(name, price, details, imageSrc, save = true) {
-                var itemDiv = document.createElement('div');
-                itemDiv.className = 'item';
-                itemDiv.innerHTML = `
-                    <div class="admin-item-controls">
-                        <button class="delete-item">Delete</button>
-                    </div>
-                    <p><strong>${name}</strong></p>
-                    <p>Price: $${price}</p>
-                    <p>Details: ${details}</p>
-                    <img src="${imageSrc}" alt="${name}">
-                    <button class="details-button">Product Details</button>
+        function displayItems() {
+            itemList.innerHTML = "";
+            items.forEach(function(item, index) {
+                var itemElement = document.createElement("div");
+                itemElement.className = "item";
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p>${item.details}</p>
+                    <p>Price: $${item.price}</p>
+                    <button class="details-button">View Details</button>
                     <button class="buy-button">Buy</button>
                 `;
-                itemList.appendChild(itemDiv);
-
-                var adminItemDiv = itemDiv.cloneNode(true);
-                adminItemList.appendChild(adminItemDiv);
-
-                var deleteBtn = adminItemDiv.querySelector('.delete-item');
-                deleteBtn.onclick = function() {
-                    adminItemDiv.remove();
-                    itemDiv.remove();
-                    updateLocalStorage();
-                };
-
-                var buyBtn = itemDiv.querySelector('.buy-button');
-                buyBtn.onclick = function() {
-                    chatBox.style.display = 'block';
-                };
-
-                if (save) {
-                    showPopup(`Item "${name}" added successfully!`);
-                    updateLocalStorage();
-                }
-            }
-
-            // Update local storage with current items
-            function updateLocalStorage() {
-                var items = [];
-                var itemElements = itemList.querySelectorAll('.item');
-                itemElements.forEach(function(itemElement) {
-                    var name = itemElement.querySelector('p strong').textContent;
-                    var price = itemElement.querySelector('p:nth-of-type(2)').textContent.split('$')[1];
-                    var details = itemElement.querySelector('p:nth-of-type(3)').textContent.split(': ')[1];
-                    var imageSrc = itemElement.querySelector('img').src;
-                    items.push({ name: name, price: price, details: details, imageSrc: imageSrc });
-                });
-                saveItemsToLocalStorage(items);
-            }
-
-            loadItemsFromLocalStorage();
-
-            // Event listener for Add Item button
-            addItemBtn.addEventListener('click', function() {
-                var itemName = document.getElementById('itemName').value;
-                var itemPrice = document.getElementById('itemPrice').value;
-                var itemDetails = document.getElementById('itemDetails').value;
-                var itemImage = document.getElementById('itemImage').files[0];
-
-                if (itemName && itemPrice && itemDetails && itemImage) {
-                    var reader = new FileReader();
-                    reader.onload = function(event) {
-                        addItem(itemName, itemPrice, itemDetails, event.target.result);
-                    };
-                    reader.readAsDataURL(itemImage);
-
-                    document.getElementById('itemName').value = '';
-                    document.getElementById('itemPrice').value = '';
-                    document.getElementById('itemDetails').value = '';
-                    document.getElementById('itemImage').value = '';
-                } else {
-                    alert('Please fill all fields');
-                }
+                itemList.appendChild(itemElement);
             });
+        }
 
-            // Event listener for popup button
-            popupBtn.addEventListener('click', function() {
-                popup.style.display = 'block';
+        function displayAdminItems() {
+            adminItemList.innerHTML = "";
+            items.forEach(function(item, index) {
+                var itemElement = document.createElement("div");
+                itemElement.className = "item";
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p>${item.details}</p>
+                    <p>Price: $${item.price}</p>
+                    <div class="admin-item-controls">
+                        <button onclick="deleteItem(${index})">Delete</button>
+                    </div>
+                `;
+                adminItemList.appendChild(itemElement);
             });
+        }
 
-            // Event listeners for closing popups
-            closeBtns.forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    this.parentElement.parentElement.style.display = 'none';
-                });
-            });
+        function deleteItem(index) {
+            items.splice(index, 1);
+            displayItems();
+            displayAdminItems();
+        }
 
-            // Event listeners for navigation links
-            navLinks.forEach(function(link) {
-                link.addEventListener('click', function() {
-                    var sectionId = this.getAttribute('data-section');
-                    var section = document.getElementById(sectionId);
-                    navPopup.style.display = 'block';
-                    popupContent.innerHTML = section.innerHTML;
-                });
-            });
-
-            // Event listener for chat box toggle
-            closeChatBtn.addEventListener('click', function() {
-                chatBox.style.display = 'none';
-            });
-
-            // Event listener for send button in chat box
-            sendBtn.addEventListener('click', function() {
-                var message = chatInput.value.trim();
-                if (message !== '') {
-                    var messageDiv = document.createElement('div');
-                    messageDiv.className = 'message';
-                    messageDiv.textContent = "Visitor: " + message;
-                    chatBoxContent.appendChild(messageDiv);
-                    chatInput.value = '';
-                    // Save the message to local storage
-                    saveMessageToLocalStorage("Visitor: " + message);
-                }
-            });
-
-            // Save chat messages to local storage
-            function saveMessageToLocalStorage(message) {
-                var messages = localStorage.getItem('chatMessages');
-                messages = messages ? JSON.parse(messages) : [];
-                messages.push(message);
-                localStorage.setItem('chatMessages', JSON.stringify(messages));
-            }
-
-            // Load chat messages from local storage
-            function loadMessagesFromLocalStorage() {
-                var messages = localStorage.getItem('chatMessages');
-                if (messages) {
-                    messages = JSON.parse(messages);
-                    messages.forEach(function(message) {
-                        var messageDiv = document.createElement('div');
-                        messageDiv.className = 'message';
-                        messageDiv.textContent = message;
-                        chatBoxContent.appendChild(messageDiv);
-                    });
-                }
-            }
-
-            loadMessagesFromLocalStorage();
-        });
     </script>
 </body>
 </html>
