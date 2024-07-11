@@ -1,10 +1,12 @@
+
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My E-commerce Website</title>
- <!-- Start of LiveChat (www.livechat.com) code -->
+  <!-- Start of LiveChat (www.livechat.com) code -->
 <script>
     window.__lc = window.__lc || {};
     window.__lc.license = 18245496;
@@ -15,25 +17,41 @@
 <noscript><a href="https://www.livechat.com/chat-with/18245496/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
 <!-- End of LiveChat code -->
   
-
-  <style>
+<!DOCTYPE html> 
+    
+    
+    
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            color: #333;
+            animation: backgroundAnimation 15s infinite alternate;
+        }
+
+        @keyframes backgroundAnimation {
+            from {
+                background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            }
+            to {
+                background: linear-gradient(to right, #34e89e, #0f3443);
+            }
         }
 
         header {
             background-color: #333;
             color: #fff;
             padding: 1rem 0;
+            text-align: center;
         }
 
         nav ul {
             list-style-type: none;
             padding: 0;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
         }
 
         nav ul li {
@@ -44,10 +62,21 @@
             color: white;
             text-decoration: none;
             cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ff6347;
         }
 
         section {
             padding: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        #home {
+            display: block;
         }
 
         .popup {
@@ -60,6 +89,7 @@
             background-color: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+            animation: fadeIn 0.5s;
         }
 
         .popup-content {
@@ -69,6 +99,7 @@
             text-align: center;
             width: 300px;
             margin: auto;
+            animation: slideIn 0.5s;
         }
 
         .close {
@@ -84,6 +115,11 @@
             color: white;
             border: none;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe:hover {
+            background-color: #ff6347;
         }
 
         .subscribe a {
@@ -94,8 +130,17 @@
         .item {
             border: 1px solid #ccc;
             padding: 10px;
-            margin: 10px 0;
+            margin: 10px;
             position: relative;
+            background: white;
+            transition: transform 0.3s;
+            display: inline-block;
+            vertical-align: top;
+            width: calc(33.333% - 40px);
+        }
+
+        .item:hover {
+            transform: scale(1.05);
         }
 
         .item img {
@@ -110,10 +155,16 @@
             border: none;
             padding: 10px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .details-button {
             margin-right: 10px;
+        }
+
+        .buy-button:hover,
+        .details-button:hover {
+            background-color: #ff6347;
         }
 
         .admin {
@@ -134,66 +185,63 @@
             border: none;
             padding: 5px 10px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .chat-box {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .chat-box-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 5px;
-            margin-bottom: 5px;
-        }
-
-        .chat-box-header h3 {
-            margin: 0;
-            font-size: 16px;
-        }
-
-        .chat-box-header .close-chat {
-            cursor: pointer;
-            color: red;
-        }
-
-        .chat-box-content {
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .chat-input {
-            width: calc(100% - 20px);
-            margin-top: 10px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-
-        .send-button {
-            margin-top: 5px;
-            padding: 5px 10px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
+        .admin-item-controls button:hover {
+            background-color: #d32f2f;
         }
 
         @media (max-width: 768px) {
             nav ul {
                 flex-direction: column;
+            }
+
+            .popup-content {
+                width: 80%;
+            }
+
+            .item {
+                width: calc(50% - 40px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .item {
+                width: calc(100% - 40px);
+            }
+        }
+
+        .password-section {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .password-section input,
+        .password-section button {
+            margin-top: 5px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+            }
+            to {
+                transform: translateY(0);
             }
         }
     </style>
@@ -205,6 +253,7 @@
                 <li><a class="nav-link" data-section="home">Home</a></li>
                 <li><a class="nav-link" data-section="contact">Contact Us</a></li>
                 <li><a class="nav-link" data-section="help">Help</a></li>
+                <li><a class="nav-link" data-section="buy">Buy</a></li>
             </ul>
         </nav>
     </header>
@@ -219,11 +268,8 @@
                 <button>Subscribe</button>
             </div>
         </div>
-        <button id="popupBtn">Click for Pop-up</button>
-    </section>
-
-    <section id="video">
-        <h2>Featured Video</h2>
+        <button id="popupBtn">Click to join us</button>
+        <h2>Our YouTube Channel</h2>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/Pf5oQ3VGC1k?si=wMVTW0x4qlSRp77A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <button class="subscribe"><a href="https://www.youtube.com/channel/UC6uT2qwWXAMSC-J594HUYHg" target="_blank">Subscribe</a></button>
     </section>
@@ -237,8 +283,8 @@
 
     <section id="contact">
         <h2>Contact Us</h2>
-        <p>Email: contact@example.com</p>
-        <p>Phone: +1234567890</p>
+        <p>Email: bibekmagar9843@gmail.com</p>
+        <p>Phone: +9779804954253</p>
     </section>
 
     <section id="help">
@@ -246,199 +292,211 @@
         <p>For any inquiries, please visit our FAQ page or contact our support team.</p>
     </section>
 
+    <section id="buy">
+        <h2>Buy Items</h2>
+        <div id="buyItemList"></div>
+    </section>
+
     <section class="admin" id="adminSection">
         <h2>Admin Seller Section</h2>
         <input type="text" id="itemName" placeholder="Item Name">
         <input type="text" id="itemPrice" placeholder="Item Price">
         <textarea id="itemDetails" placeholder="Item Details"></textarea>
-        <input type="file" id="itemImage" accept="image/*">
-        <button id="addItemBtn">Add Item</button>
-        <div id="adminItemList">
-            <!-- Admin items will be added here -->
-        </div>
+        <input type="file" id="itemImage">
+        <button onclick="addItem()">Add Item</button>
+        <h3>Joined Users</h3>
+        <div id="userList"></div>
     </section>
 
-    <div class="popup" id="navPopup">
-        <div class="popup-content">
-            <span class="close">&times;</span>
-            <div id="popupContent"></div>
-        </div>
+    <div class="password-section" id="passwordSection">
+        <input type="password" id="adminPassword" placeholder="Enter admin password">
+        <button onclick="checkPassword()">Submit</button>
     </div>
-
-    <div class="chat-box" id="chatBox">
-        <div class="chat-box-header">
-            <h3>Live Chat with Seller</h3>
-            <span class="close-chat">&times;</span>
-        </div>
-        <div class="chat-box-content" id="chatBoxContent">
-            <!-- Chat messages will be added here -->
-        </div>
-        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
-        <button class="send-button" id="sendButton">Send</button>
-    </div>
-    <button id="chatBtn">Chat with Seller</button>
-
-    <!-- Password Section -->
-    <section id="passwordSection">
-        <h2>Admin Login</h2>
-        <input type="password" id="adminPassword" placeholder="Enter Admin Password">
-        <button id="loginBtn">Login</button>
-    </section>
 
     <script>
-        // JavaScript for pop-up
-        var popup = document.getElementById("popup");
-        var popupBtn = document.getElementById("popupBtn");
-        var closePopup = document.getElementsByClassName("close")[0];
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            const popup = document.getElementById('popup');
+            const popupBtn = document.getElementById('popupBtn');
+            const closeBtn = document.querySelector('.close');
 
-        popupBtn.onclick = function() {
-            popup.style.display = "flex";
-        }
-
-        closePopup.onclick = function() {
-            popup.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == popup) {
-                popup.style.display = "none";
-            }
-        }
-
-        // JavaScript for navigation
-        var navLinks = document.querySelectorAll('.nav-link');
-        var sections = document.querySelectorAll('section');
-
-        navLinks.forEach(function(link) {
-            link.addEventListener('click', function() {
-                var section = document.getElementById(link.getAttribute('data-section'));
-                sections.forEach(function(sec) {
-                    sec.style.display = 'none';
+            navLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    sections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    document.getElementById(this.getAttribute('data-section')).style.display = 'block';
                 });
-                section.style.display = 'block';
             });
+
+            popupBtn.addEventListener('click', function () {
+                popup.style.display = 'flex';
+            });
+
+            closeBtn.addEventListener('click', function () {
+                popup.style.display = 'none';
+            });
+
+            // Load items and users from local storage on page load
+            loadItems();
+            loadUsers();
+
+            // Admin authentication check
+            checkAdmin();
         });
 
-        // JavaScript for item list
-        var itemList = document.getElementById("itemList");
-        var adminItemList = document.getElementById("adminItemList");
-        var addItemBtn = document.getElementById("addItemBtn");
-        var items = [];
-        
-        // JavaScript for live chat
-        var chatBtn = document.getElementById("chatBtn");
-        var chatBox = document.getElementById("chatBox");
-        var closeChat = document.getElementsByClassName("close-chat")[0];
-        var chatBoxContent = document.getElementById("chatBoxContent");
-        var chatInput = document.getElementById("chatInput");
-        var sendButton = document.getElementById("sendButton");
-        
-        chatBtn.onclick = function() {
-            chatBox.style.display = "block";
-        }
+        let adminLoggedIn = false;
 
-        closeChat.onclick = function() {
-            chatBox.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == chatBox) {
-                chatBox.style.display = "none";
-            }
-        }
-
-        sendButton.onclick = function() {
-            var message = chatInput.value;
-            var messageElement = document.createElement("p");
-            messageElement.textContent = message;
-            chatBoxContent.appendChild(messageElement);
-            chatInput.value = "";
-        }
-
-        // JavaScript for admin section
-        var adminSection = document.getElementById("adminSection");
-        var adminPassword = document.getElementById("adminPassword");
-        var loginBtn = document.getElementById("loginBtn");
-        var passwordSection = document.getElementById("passwordSection");
-
-        const correctPassword = "admin123"; // Replace with your desired password
-
-        loginBtn.onclick = function() {
-            if (adminPassword.value === correctPassword) {
-                adminSection.style.display = "block";
-                passwordSection.style.display = "none";
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === 'admin') {
+                adminLoggedIn = true;
+                document.getElementById('adminSection').style.display = 'block';
+                document.getElementById('passwordSection').style.display = 'none';
+                displayAdminControls();
             } else {
-                alert("Incorrect password. Please try again.");
+                alert('Incorrect password');
             }
         }
 
-        addItemBtn.onclick = function() {
-            var itemName = document.getElementById("itemName").value;
-            var itemPrice = document.getElementById("itemPrice").value;
-            var itemDetails = document.getElementById("itemDetails").value;
-            var itemImage = document.getElementById("itemImage").files[0];
+        function addItem() {
+            const name = document.getElementById('itemName').value;
+            const price = document.getElementById('itemPrice').value;
+            const details = document.getElementById('itemDetails').value;
+            const image = document.getElementById('itemImage').files[0];
 
-            if (!itemName || !itemPrice || !itemDetails || !itemImage) {
-                alert("Please fill in all fields and select an image.");
+            if (!name || !price || !details || !image) {
+                alert('Please fill out all fields and select an image.');
                 return;
             }
 
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                var item = {
-                    name: itemName,
-                    price: itemPrice,
-                    details: itemDetails,
-                    image: event.target.result
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const item = {
+                    id: Date.now(),
+                    name: name,
+                    price: price,
+                    details: details,
+                    image: e.target.result,
                 };
+
+                let items = localStorage.getItem('items');
+                items = items ? JSON.parse(items) : [];
                 items.push(item);
+                localStorage.setItem('items', JSON.stringify(items));
                 displayItems();
-                displayAdminItems();
             };
-            reader.readAsDataURL(itemImage);
-        };
+            reader.readAsDataURL(image);
+
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemPrice').value = '';
+            document.getElementById('itemDetails').value = '';
+            document.getElementById('itemImage').value = '';
+        }
 
         function displayItems() {
-            itemList.innerHTML = "";
-            items.forEach(function(item, index) {
-                var itemElement = document.createElement("div");
-                itemElement.className = "item";
-                itemElement.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}">
-                    <h3>${item.name}</h3>
-                    <p>${item.details}</p>
-                    <p>Price: $${item.price}</p>
-                    <button class="details-button">View Details</button>
-                    <button class="buy-button">Buy</button>
-                `;
-                itemList.appendChild(itemElement);
-            });
-        }
+            const items = JSON.parse(localStorage.getItem('items')) || [];
+            const itemList = document.getElementById('itemList');
+            const buyItemList = document.getElementById('buyItemList');
+            itemList.innerHTML = '';
+            buyItemList.innerHTML = '';
 
-        function displayAdminItems() {
-            adminItemList.innerHTML = "";
-            items.forEach(function(item, index) {
-                var itemElement = document.createElement("div");
-                itemElement.className = "item";
-                itemElement.innerHTML = `
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('item');
+                itemDiv.innerHTML = `
                     <img src="${item.image}" alt="${item.name}">
                     <h3>${item.name}</h3>
-                    <p>${item.details}</p>
                     <p>Price: $${item.price}</p>
+                    <p>${item.details}</p>
+                    <button class="buy-button" onclick="buyItem('${item.name}')">Buy</button>
                     <div class="admin-item-controls">
-                        <button onclick="deleteItem(${index})">Delete</button>
+                        <button onclick="deleteItem(${item.id})">Delete</button>
                     </div>
                 `;
-                adminItemList.appendChild(itemElement);
+
+                itemList.appendChild(itemDiv);
+
+                const buyItemDiv = itemDiv.cloneNode(true);
+                buyItemDiv.querySelector('.admin-item-controls').remove();
+                buyItemList.appendChild(buyItemDiv);
+            });
+
+            displayAdminControls();
+        }
+
+        function displayAdminControls() {
+            if (adminLoggedIn) {
+                const adminControls = document.querySelectorAll('.admin-item-controls');
+                adminControls.forEach(control => {
+                    control.style.display = 'block';
+                });
+            }
+        }
+
+        function deleteItem(itemId) {
+            let items = JSON.parse(localStorage.getItem('items'));
+            items = items.filter(item => item.id !== itemId);
+            localStorage.setItem('items', JSON.stringify(items));
+            displayItems();
+        }
+
+        function loadItems() {
+            displayItems();
+        }
+
+        function buyItem(itemName) {
+            alert(`Initiating chat for buying ${itemName}`);
+            // Implement chat functionality here
+        }
+
+        function checkAdmin() {
+            if (adminLoggedIn) {
+                document.getElementById('adminSection').style.display = 'block';
+                document.getElementById('passwordSection').style.display = 'none';
+            }
+        }
+
+        function joinUs() {
+            const email = document.querySelector('#popup input[type="email"]').value;
+            if (!email) {
+                alert('Please enter an email.');
+                return;
+            }
+
+            const user = {
+                email: email,
+                joinedAt: new Date().toLocaleString()
+            };
+
+            let users = localStorage.getItem('users');
+            users = users ? JSON.parse(users) : [];
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+            displayUsers();
+
+            document.querySelector('#popup input[type="email"]').value = '';
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function displayUsers() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+
+            users.forEach(user => {
+                const userDiv = document.createElement('div');
+                userDiv.textContent = `Email: ${user.email} - Joined At: ${user.joinedAt}`;
+                userList.appendChild(userDiv);
             });
         }
 
-        function deleteItem(index) {
-            items.splice(index, 1);
-            displayItems();
-            displayAdminItems();
+        function loadUsers() {
+            displayUsers();
         }
 
+        document.querySelector('#popup button').addEventListener('click', joinUs);
     </script>
 </body>
 </html>
